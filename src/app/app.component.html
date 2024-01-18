@@ -5,7 +5,7 @@
       id="searchProduct" type="text" placeholder="Search Product">
   </div>
 
-  <div class="p-4 full-width-100 flex justify-center gap-x-4">
+  <div class="pagination-main">
     <nav aria-label="Page navigation example">
       <ul class="inline-flex -space-x-px text-sm">
         <li>
@@ -54,7 +54,7 @@
               {{index + 1}}
             </td>
             <td class="p-4">
-              <img [src]="item?.thumbnail" class="w-16 md:w-32 max-w-full max-h-full">
+              <img [src]="item?.thumbnail" class="product-image">
             </td>
 
             <td class="table-data">

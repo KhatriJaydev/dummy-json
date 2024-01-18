@@ -38,3 +38,11 @@
 .table-row {
     @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
 }
+
+.pagination-main {
+    @apply p-4 full-width-100 flex justify-center gap-x-4
+}
+
+.product-image {
+    @apply w-16 md:w-32 max-w-full max-h-full
+}
