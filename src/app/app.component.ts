@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/models/common';
 import { ApiService } from 'src/service/api.service';
 
@@ -16,19 +17,22 @@ export class AppComponent implements OnInit {
   selectedItem: number = this.pagePerItems[0];
 
   currentPage: number = 1;
+  subs: Subscription = new Subscription();
 
-  constructor(private apiService: ApiService) { };
+  constructor(private apiService: ApiService) { 
+    // this.subs = this.apiService.getValue().subscribe(value => {
+    //   console.log(value);
+    // });
+  };
 
   fetchProducts() {
     const itemsPerPage = this.selectedItem;
     const currentPageIndex = this.currentPage - 1;
     const skip = currentPageIndex * itemsPerPage;
 
-    this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
-      next: (response: any) => {
-        this.getAllProductsList = response.products;
-        console.log(this.getAllProductsList);
-
+    this.subs = this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
+      next: (response: Product[]) => {
+        this.getAllProductsList = response
       }
     })
   }
@@ -74,5 +78,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }
