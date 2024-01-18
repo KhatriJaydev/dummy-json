@@ -1,98 +1,93 @@
 <main>
 
-  <div class="p-4 w-full">
-    <input [(ngModel)]="searchQueryText" (keydown)="searchProductsInput()"
-      class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none rounded-lg focus:shadow-outline"
+  <div class="full-width-100 p-4 ">
+    <input [(ngModel)]="searchQueryText" (keydown)="searchProductsInput()" class="search-input-box full-width-100"
       id="searchProduct" type="text" placeholder="Search Product">
   </div>
 
-  <div class="p-4 w-full flex justify-center gap-x-4">
+  <div class="p-4 full-width-100 flex justify-center gap-x-4">
     <nav aria-label="Page navigation example">
       <ul class="inline-flex -space-x-px text-sm">
         <li>
           <button (click)="goToPreviousPage()" [disabled]="currentPage <= 1"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</button>
+            class="rounded-s-lg pagination-buttons">Previous</button>
         </li>
         <li *ngFor="let page of getPaginationArray()">
-          <button (click)="selectPageNumber(page)"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{
+          <button (click)="selectPageNumber(page)" class="pagination-buttons">{{
             page }}</button>
         </li>
         <li>
           <button (click)="goToNextPage()" [disabled]="currentPage >= 100 / selectedItem"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
+            class="rounded-e-lg pagination-buttons">Next</button>
         </li>
       </ul>
     </nav>
     <div>
-      <select id="pageitems"
-        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-        [(ngModel)]="selectedItem" (change)="setPagePerLimit()">
+      <select id="pageitems" class=" rounded-lg pagination-buttons" [(ngModel)]="selectedItem"
+        (change)="setPagePerLimit()">
         <option *ngFor="let item of pagePerItems" [value]="item">{{ item }}</option>
       </select>
     </div>
   </div>
 
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <table class="full-width-100 table-main">
+      <thead class="table-head">
         <tr>
-          <th scope="col" class="px-6 py-3 text-center">Sr. No</th>
-          <th scope="col" class="px-16 py-3 text-center">
-            Image
-          </th>
-          <th scope="col" class="px-6 py-3 text-center">title</th>
-          <th scope="col" class="px-6 py-3 text-center">price</th>
-          <th scope="col" class="px-6 py-3 text-center">discountPercentage</th>
-          <th scope="col" class="px-6 py-3 text-center">rating</th>
-          <th scope="col" class="px-6 py-3 text-center">stock</th>
-          <th scope="col" class="px-6 py-3 text-center">brand</th>
-          <th scope="col" class="px-6 py-3 text-center">category</th>
-          <th scope="col" class="px-6 py-3 text-center">description</th>
+          <th scope="col" class="table-headings">Sr. No</th>
+          <th scope="col" class="image-column table-headings">Image</th>
+          <th scope="col" class="table-headings">title</th>
+          <th scope="col" class="table-headings">price</th>
+          <th scope="col" class="table-headings">discountPercentage</th>
+          <th scope="col" class="table-headings">rating</th>
+          <th scope="col" class="table-headings">stock</th>
+          <th scope="col" class="table-headings">brand</th>
+          <th scope="col" class="table-headings">category</th>
+          <th scope="col" class="table-headings">description</th>
         </tr>
       </thead>
 
-      <ng-container *ngFor="let item of getAllProductsList;let index = index;">
-        <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-center">
+      <tbody>
+        <ng-container *ngFor="let item of getAllProductsList;let index = index;">
+          <tr class="table-row">
+            <td class="table-data">
               {{index + 1}}
             </td>
             <td class="p-4">
               <img [src]="item?.thumbnail" class="w-16 md:w-32 max-w-full max-h-full">
             </td>
 
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.title}}
             </td>
 
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.price | currency:'USD'}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.discountPercentage | percent}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.rating}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.stock}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.brand}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white capitalize">
+            <td class="table-data capitalize">
               {{item?.category}}
             </td>
-            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
+            <td class="table-data">
               {{item?.description}}
             </td>
           </tr>
-        </tbody>
-      </ng-container>
+        </ng-container>
+      </tbody>
     </table>
     <ng-container *ngIf="getAllProductsList.length === 0">
-      <div class="px-6 py-4 text-center text-gray-700 dark:text-white uppercase">item not found</div>
+      <div class="table-data capitalize">item not found</div>
     </ng-container>
   </div>
 

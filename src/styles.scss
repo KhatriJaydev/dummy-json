@@ -2,3 +2,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.full-width-100 {
+    @apply w-full;
+}
+
+.table-headings {
+    @apply px-6 py-3 text-center;
+}
+
+.table-headings.image-column {
+    @apply px-16 py-3;
+}
+
+.table-data {
+    @apply px-6 py-4 text-center font-semibold text-gray-900 dark:text-white;
+}
+
+.pagination-buttons {
+    @apply flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white;
+}
+
+.search-input-box {
+    @apply shadow appearance-none border py-2 px-3 text-gray-700 leading-tight hover:bg-gray-50 font-bold rounded focus:outline-none;
+}
+
+.table-main {
+    @apply text-sm rtl:text-right text-gray-500 dark:text-gray-400
+}
+
+.table-head {
+    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400
+}
+
+.table-row {
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
+}
