@@ -2,10 +2,11 @@
 
   <div class="p-4 w-full">
     <input [(ngModel)]="searchQuery" (keydown)="searchProducts()"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none rounded-lg focus:shadow-outline"
       id="searchProduct" type="text" placeholder="Search Product">
   </div>
-  <div class="p-4 w-full flex justify-center">
+
+  <div class="p-4 w-full flex justify-center gap-x-4">
     <nav aria-label="Page navigation example">
       <ul class="inline-flex -space-x-px text-sm">
         <li>
@@ -17,18 +18,18 @@
             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{
             page }}</button>
         </li>
-        <li >
+        <li>
           <button [disabled]="hideNext" (click)="goToNextPage()"
             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
         </li>
       </ul>
     </nav>
-
-    <div>
-      <label for="pageitems" class="text-white bg-blue-700">Select page per item</label>
-      <select id="pageitems" [(ngModel)]="selectedItem" (change)="setPagePerLimit()">
+    <div><select id="pageitems"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+        [(ngModel)]="selectedItem" (change)="setPagePerLimit()">
         <option *ngFor="let item of pagePerItems" [value]="item">{{ item }}</option>
-      </select>
+      </select></div>
+    <div>
     </div>
   </div>
 
@@ -40,7 +41,6 @@
           <th scope="col" class="px-16 py-3">
             Image
           </th>
-
           <th scope="col" class="px-6 py-3">title</th>
           <th scope="col" class="px-6 py-3">price</th>
           <th scope="col" class="px-6 py-3">discountPercentage</th>
@@ -57,7 +57,7 @@
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
               {{index + 1}}
-            </td> 
+            </td>
             <td class="p-4">
               <img [src]="item?.thumbnail" class="w-16 md:w-32 max-w-full max-h-full">
             </td>
