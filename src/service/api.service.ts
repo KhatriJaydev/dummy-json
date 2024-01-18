@@ -17,7 +17,7 @@ export class ApiService {
     return this.http.get<Product[]>(`${this.baseUrl}/products?limit=${productLimit}&skip=${skip}`);
   }  
 
-  searchProducts(query: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products/search?q=${query}`);
+  searchProducts(query: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/products/search?q=${query}`);
   }
 }
