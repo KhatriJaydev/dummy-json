@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Product } from 'src/models/common';
 // import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,8 +13,8 @@ export class ApiService {
     this.baseUrl = 'https://dummyjson.com';
   }
 
-  getAllProducts(productLimit: number, skip: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/products?limit=${productLimit}&skip=${skip}`);
+  getAllProducts(productLimit: number, skip: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/products?limit=${productLimit}&skip=${skip}`);
   }  
 
   searchProducts(query: string): Observable<any> {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/models/common';
 import { ApiService } from 'src/service/api.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ApiService } from 'src/service/api.service';
 })
 export class AppComponent implements OnInit {
   title = 'dummy-json';
-  getAllProductsList: any = [];
+  getAllProductsList: Product[] = [];
   searchQueryText: string = ''
 
   pagePerItems: number[] = [30, 60, 100];
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit {
     this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
       next: (response: any) => {
         this.getAllProductsList = response.products;
+        console.log(this.getAllProductsList);
+
       }
     })
   }
