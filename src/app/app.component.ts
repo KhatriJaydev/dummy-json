@@ -9,54 +9,47 @@ import { ApiService } from 'src/service/api.service';
 export class AppComponent implements OnInit {
   title = 'dummy-json';
   getAllProductsList: any = [];
-  searchQuery: string = ''
+  searchQueryText: string = ''
 
   pagePerItems: number[] = [30, 60, 100];
   selectedItem: number = this.pagePerItems[0];
 
   currentPage: number = 1;
-  hideNext = false
 
   constructor(private apiService: ApiService) { };
 
   fetchProducts() {
-    const skip = (this.currentPage - 1) * this.selectedItem;
+    const itemsPerPage = this.selectedItem;
+    const currentPageIndex = this.currentPage - 1;
+    const skip = currentPageIndex * itemsPerPage;
+
     this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
       next: (response: any) => {
         this.getAllProductsList = response.products;
-        this.hideNext = false;
       }
     })
   }
 
-  searchProducts() {
-    this.apiService.searchProducts(this.searchQuery).subscribe({
+  searchProductsInput() {
+    this.apiService.searchProducts(this.searchQueryText).subscribe({
       next: (response: any) => {
         this.getAllProductsList = response.products;
-        // console.table(this.getAllProductsList);
       }
     });
   }
 
   setPagePerLimit() {
-    this.fetchProducts();
     this.currentPage = 1;
-    console.log('Selected Item:', this.selectedItem);
+    this.fetchProducts();
   }
 
   goToPreviousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.fetchProducts();
-    }
+    this.currentPage--;
+    this.fetchProducts();
   }
 
   goToNextPage() {
-    if (this.getAllProductsList.length === 0) {
-      this.hideNext = true;
-    } else {
-      this.currentPage++;
-    }
+    this.currentPage++;
     this.fetchProducts();
   }
 
@@ -67,7 +60,13 @@ export class AppComponent implements OnInit {
 
   getPaginationArray() {
     const totalPages = Math.ceil(100 / this.selectedItem);
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const paginationArray = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+      paginationArray.push(i);
+    }
+
+    return paginationArray;
   }
 
   ngOnInit(): void {

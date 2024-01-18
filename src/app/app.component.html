@@ -1,7 +1,7 @@
 <main>
 
   <div class="p-4 w-full">
-    <input [(ngModel)]="searchQuery" (keydown)="searchProducts()"
+    <input [(ngModel)]="searchQueryText" (keydown)="searchProductsInput()"
       class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none rounded-lg focus:shadow-outline"
       id="searchProduct" type="text" placeholder="Search Product">
   </div>
@@ -10,7 +10,7 @@
     <nav aria-label="Page navigation example">
       <ul class="inline-flex -space-x-px text-sm">
         <li>
-          <button (click)="goToPreviousPage()"
+          <button (click)="goToPreviousPage()" [disabled]="currentPage <= 1"
             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</button>
         </li>
         <li *ngFor="let page of getPaginationArray()">
@@ -19,16 +19,18 @@
             page }}</button>
         </li>
         <li>
-          <button [disabled]="hideNext" (click)="goToNextPage()"
+          <button (click)="goToNextPage()" [disabled]="currentPage >= 100 / selectedItem"
             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
         </li>
       </ul>
     </nav>
-    <div><select id="pageitems"
+    <div>
+      <select id="pageitems"
         class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
         [(ngModel)]="selectedItem" (change)="setPagePerLimit()">
         <option *ngFor="let item of pagePerItems" [value]="item">{{ item }}</option>
-      </select></div>
+      </select>
+    </div>
     <div>
     </div>
   </div>
