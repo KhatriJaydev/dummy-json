@@ -34,57 +34,57 @@
   </div>
 
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">Sr. No</th>
-          <th scope="col" class="px-16 py-3">
+          <th scope="col" class="px-6 py-3 text-center">Sr. No</th>
+          <th scope="col" class="px-16 py-3 text-center">
             Image
           </th>
-          <th scope="col" class="px-6 py-3">title</th>
-          <th scope="col" class="px-6 py-3">price</th>
-          <th scope="col" class="px-6 py-3">discountPercentage</th>
-          <th scope="col" class="px-6 py-3">rating</th>
-          <th scope="col" class="px-6 py-3">stock</th>
-          <th scope="col" class="px-6 py-3">brand</th>
-          <th scope="col" class="px-6 py-3">category</th>
-          <th scope="col" class="px-6 py-3">description</th>
+          <th scope="col" class="px-6 py-3 text-center">title</th>
+          <th scope="col" class="px-6 py-3 text-center">price</th>
+          <th scope="col" class="px-6 py-3 text-center">discountPercentage</th>
+          <th scope="col" class="px-6 py-3 text-center">rating</th>
+          <th scope="col" class="px-6 py-3 text-center">stock</th>
+          <th scope="col" class="px-6 py-3 text-center">brand</th>
+          <th scope="col" class="px-6 py-3 text-center">category</th>
+          <th scope="col" class="px-6 py-3 text-center">description</th>
         </tr>
       </thead>
 
       <ng-container *ngFor="let item of getAllProductsList;let index = index;">
         <tbody>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-center">
               {{index + 1}}
             </td>
             <td class="p-4">
               <img [src]="item?.thumbnail" class="w-16 md:w-32 max-w-full max-h-full">
             </td>
 
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.title}}
             </td>
 
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.price | currency:'USD'}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.discountPercentage | percent}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.rating}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.stock}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.brand}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.category}}
             </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <td class="px-6 py-4 text-center font-semibold text-gray-900 dark:text-white">
               {{item?.description}}
             </td>
           </tr>
