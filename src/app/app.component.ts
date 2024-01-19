@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Subscription, debounceTime, fromEvent, map } from 'rxjs';
 import { Product } from 'src/models/common';
 import { ApiService } from 'src/service/api.service';
 
@@ -9,6 +9,7 @@ import { ApiService } from 'src/service/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('searchInput') searchInput?: ElementRef;
   title = 'dummy-json';
   getAllProductsList: Product[] = [];
   searchQueryText: string = ''
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
   currentPage: number = 1;
   subs: Subscription = new Subscription();
 
-  constructor(private apiService: ApiService) { 
+  constructor(private apiService: ApiService) {
     // this.subs = this.apiService.getValue().subscribe(value => {
     //   console.log(value);
     // });
@@ -35,14 +36,6 @@ export class AppComponent implements OnInit {
         this.getAllProductsList = response
       }
     })
-  }
-
-  searchProductsInput() {
-    this.apiService.searchProducts(this.searchQueryText).subscribe({
-      next: (response: any) => {
-        this.getAllProductsList = response.products;
-      }
-    });
   }
 
   setPagePerLimit() {
@@ -82,5 +75,21 @@ export class AppComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    const searchTerm = fromEvent(this.searchInput?.nativeElement, 'keyup').pipe(
+      map((event: any) => event.target.value),
+      debounceTime(1000)
+    )
+
+    searchTerm.subscribe(res => {
+      this.apiService.searchProducts(res).subscribe({
+        next: (response: Product[]) => {
+          this.getAllProductsList = response;
+        }
+      })
+      console.log(res);
+    })
   }
 }

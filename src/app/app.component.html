@@ -1,7 +1,7 @@
 <main>
 
   <div class="full-width-100 p-4 ">
-    <input [(ngModel)]="searchQueryText" (keydown)="searchProductsInput()" class="search-input-box full-width-100"
+    <input [(ngModel)]="searchQueryText" #searchInput class="search-input-box full-width-100"
       id="searchProduct" type="text" placeholder="Search Product">
   </div>
 

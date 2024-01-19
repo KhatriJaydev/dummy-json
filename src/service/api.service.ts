@@ -26,7 +26,12 @@ export class ApiService {
   }
 
   searchProducts(query: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/products/search?q=${query}`);
+    return this.http.get<ProductResponse>(`${this.baseUrl}/products/search?q=${query}`).pipe(
+      map((data: ProductResponse) => {
+        const searchedProducts: Product[] = data.products;
+        return searchedProducts
+      })
+    )
   }
 
   // getValue(): Observable<number> {
