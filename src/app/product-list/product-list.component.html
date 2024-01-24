@@ -1,0 +1,58 @@
+<table class="full-width-100 table-main">
+    <thead class="table-head">
+        <tr>
+            <th scope="col" class="table-headings">Sr. No</th>
+            <th scope="col" class="image-column table-headings">Image</th>
+            <th scope="col" class="table-headings">title</th>
+            <th scope="col" class="table-headings">price</th>
+            <th scope="col" class="table-headings">discountPercentage</th>
+            <th scope="col" class="table-headings">rating</th>
+            <th scope="col" class="table-headings">stock</th>
+            <th scope="col" class="table-headings">brand</th>
+            <th scope="col" class="table-headings">category</th>
+            <th scope="col" class="table-headings">description</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <ng-container *ngFor="let item of productList;let index = index;">
+            <tr class="table-row" (click)="openProductDetail(item.id)">
+                <td class="table-data">
+                    {{index + 1}}
+                </td>
+                <td class="p-4">
+                    <img [src]="item?.thumbnail" class="product-image">
+                </td>
+
+                <td class="table-data">
+                    {{item?.title}}
+                </td>
+
+                <td class="table-data">
+                    {{item?.price | currency:'USD'}}
+                </td>
+                <td class="table-data">
+                    {{item?.discountPercentage | percent}}
+                </td>
+                <td class="table-data">
+                    {{item?.rating}}
+                </td>
+                <td class="table-data">
+                    {{item?.stock}}
+                </td>
+                <td class="table-data">
+                    {{item?.brand}}
+                </td>
+                <td class="table-data capitalize">
+                    {{item?.category}}
+                </td>
+                <td class="table-data">
+                    {{item?.description}}
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+<ng-container *ngIf="productList.length === 0">
+    <div class="table-data capitalize">item not found</div>
+</ng-container>

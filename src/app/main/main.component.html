@@ -1,0 +1,35 @@
+<main>
+    <app-search-product-input (searchProduct)="searchInputData($event)"></app-search-product-input>
+    <div class="pagination-main">
+        <nav aria-label="Page navigation example">
+            <ul class="inline-flex -space-x-px text-sm">
+                <li>
+                    <button (click)="goToPreviousPage()" [disabled]="currentPage <= 1"
+                        class="rounded-s-lg pagination-buttons">Previous</button>
+                </li>
+                <li *ngFor="let page of paginationArray">
+                    <button (click)="selectPageNumber(page)" class="pagination-buttons">{{
+                        page }}</button>
+                </li>
+                <li>
+                    <button (click)="goToNextPage()" [disabled]="currentPage >= 100 / selectedPagePerItem"
+                        class="rounded-e-lg pagination-buttons">Next</button>
+                </li>
+            </ul>
+        </nav>
+        <div>
+            <select id="pageitems" class=" rounded-lg pagination-buttons" [(ngModel)]="selectedPagePerItem"
+                (change)="setPagePerLimit()">
+                <option *ngFor="let item of pagePerItems" [value]="item">{{ item }}</option>
+            </select>
+        </div>
+    </div>
+    <!-- <app-pagination [pageNumArray]="paginationArray" [current]="currentPage" [total]="getAllProductsList.length"
+        [pagePerItemArray]="pagePerItems" (goToNext)="goToNextPage()" (goToPrevios)="goToPreviousPage()"
+        (selectPagePerItem)="setPagePerLimit()" (selectPageNumber)="selectPageNumber($event)"></app-pagination> -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <app-product-list [productList]="getAllProductsList" (productId)="getId($event)"></app-product-list>
+    </div>
+
+
+</main>

@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Subscription, debounceTime, fromEvent, map } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable, Subject, Subscription, catchError, combineLatest, debounceTime, distinctUntilChanged, filter, forkJoin, from, fromEvent, interval, map, mergeMap, multicast, of, pluck, switchMap, take, takeLast, tap, throwError, timer, toArray, withLatestFrom, zip, } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 import { Product } from 'src/models/common';
 import { ApiService } from 'src/service/api.service';
 
@@ -8,88 +11,113 @@ import { ApiService } from 'src/service/api.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  @ViewChild('searchInput') searchInput?: ElementRef;
+export class AppComponent {
   title = 'dummy-json';
-  getAllProductsList: Product[] = [];
-  searchQueryText: string = ''
+  // @ViewChild('searchInput') searchInput?: ElementRef;
+  // searchInputSubject: Subject<string> = new Subject<string>();
 
-  pagePerItems: number[] = [30, 60, 100];
-  selectedItem: number = this.pagePerItems[0];
+  // getAllProductsList: Product[] = [];
+  // searchQueryText: string = '';
 
-  currentPage: number = 1;
-  subs: Subscription = new Subscription();
+  // pagePerItems: number[] = [30, 60, 100];
+  // selectedItem: number = this.pagePerItems[0];
+  // paginationArray: Array<number> = [];
 
-  constructor(private apiService: ApiService) {
-    // this.subs = this.apiService.getValue().subscribe(value => {
-    //   console.log(value);
-    // });
-  };
+  // currentPage: number = 1;
+  // subs: Subscription = new Subscription();
 
-  fetchProducts() {
-    const itemsPerPage = this.selectedItem;
-    const currentPageIndex = this.currentPage - 1;
-    const skip = currentPageIndex * itemsPerPage;
 
-    this.subs = this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
-      next: (response: Product[]) => {
-        this.getAllProductsList = response
-      }
-    })
-  }
+  // constructor(private apiService: ApiService, private fb: FormBuilder, private router: Router) {
+  //   // this.subs = this.apiService.getValue().subscribe(value => {
+  //   //   console.log(value);
+  //   // });
 
-  setPagePerLimit() {
-    this.currentPage = 1;
-    this.fetchProducts();
-  }
+  //   this.searchInputSubject
+  //     .pipe(
+  //       debounceTime(1000),
+  //       distinctUntilChanged()
+  //     ).subscribe((value: any) => {
+  //       this.resetPageData();
+  //       this.getProducts(this.selectedItem, this.currentPage, value);
+  //     });
+  // };
 
-  goToPreviousPage() {
-    this.currentPage--;
-    this.fetchProducts();
-  }
+  // searchInputData(event: any) {
+  //   this.searchInputSubject.next(event);
+  // }
 
-  goToNextPage() {
-    this.currentPage++;
-    this.fetchProducts();
-  }
+  // resetPageData() {
+  //   this.currentPage = 1;
+  // }
 
-  selectPageNumber(page: number) {
-    this.currentPage = page;
-    this.fetchProducts();
-  }
+  // fetchProducts() {
+  //   const itemsPerPage = this.selectedItem;
+  //   const currentPageIndex = this.currentPage - 1;
+  //   const skip = currentPageIndex * itemsPerPage;
 
-  getPaginationArray() {
-    const totalPages = Math.ceil(100 / this.selectedItem);
-    const paginationArray = [];
+  //   this.subs = this.apiService.getAllProducts(this.selectedItem, skip).subscribe({
+  //     next: (response: Product[]) => {
+  //       this.getAllProductsList = response;
+  //     }
+  //   });
+  // }
 
-    for (let i = 1; i <= totalPages; i++) {
-      paginationArray.push(i);
-    }
+  // getId(event: any) {
+  //   this.getProducts(this.selectedItem, this.currentPage, undefined, event);
+  //   this.router.navigate(['product-detail']);
+  // }
 
-    return paginationArray;
-  }
+  // setPagePerLimit() {
+  //   this.currentPage = 1;
+  //   // this.fetchProducts();
+  //   this.getProducts(this.selectedItem, this.currentPage - 1);
+  // }
 
-  ngOnInit(): void {
-    this.fetchProducts();
-  }
+  // goToPreviousPage() {
+  //   this.currentPage--;
+  //   this.fetchProducts();
+  // }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
+  // goToNextPage() {
+  //   this.currentPage++;
+  //   this.fetchProducts();
+  // }
 
-  ngAfterViewInit(): void {
-    const searchTerm = fromEvent(this.searchInput?.nativeElement, 'keyup').pipe(
-      map((event: any) => event.target.value),
-      debounceTime(1000)
-    )
+  // selectPageNumber(page: number) {
+  //   this.currentPage = page;
+  //   this.fetchProducts();
+  // }
 
-    searchTerm.subscribe(res => {
-      this.apiService.searchProducts(res).subscribe({
-        next: (response: Product[]) => {
-          this.getAllProductsList = response;
-        }
-      })
-      console.log(res);
-    })
-  }
+
+  // ngOnInit(): void {
+  //   this.fetchProducts();
+  //   const itemsPerPage = this.selectedItem;
+  //   const currentPageIndex = this.currentPage - 1;
+
+  //   this.getProducts(itemsPerPage, currentPageIndex);
+
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.subs.unsubscribe();
+  // }
+
+  // getProducts(pageSize: number, pageNo: number, searchString?: string, productID?: number) {
+  //   const skip = pageNo * (pageSize - 1);
+  //   this.apiService.getProducts(pageSize, skip, searchString, productID)
+  //     .subscribe((resp) => {
+  //       if (resp.products) {
+  //         this.paginationArray = [];
+  //         const totalPages = Math.ceil(resp.total / pageSize);
+  //         for (let index = 1; index <= totalPages; index++) {
+  //           this.paginationArray.push(index);
+  //         }
+  //         this.getAllProductsList = resp.products;
+  //       }
+  //       if (productID !== undefined) {
+  //         this.apiService.singleProd.next(resp);
+  //       }
+  //     });
+  // }
+
 }

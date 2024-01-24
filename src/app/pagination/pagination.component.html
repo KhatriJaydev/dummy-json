@@ -1,0 +1,24 @@
+<div class="pagination-main">
+    <nav aria-label="Page navigation example">
+        <ul class="inline-flex -space-x-px text-sm">
+            <li>
+                <button (click)="goToPreviousPageEmit()" [disabled]="current <= 1"
+                    class="rounded-s-lg pagination-buttons">Previous</button>
+            </li>
+            <li *ngFor="let page of pageNumArray">
+                <button (click)="selectPageNumberEmit(page)" class="pagination-buttons">{{
+                    page }}</button>
+            </li>
+            <li>
+                <button (click)="goToNextPageEmit()" [disabled]="current >= 100 / selectedPagePerItem"
+                    class="rounded-e-lg pagination-buttons">Next</button>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <select id="pageitems" class=" rounded-lg pagination-buttons" [(ngModel)]="selectedPagePerItem"
+            (change)="setPagePerLimit()">
+            <option *ngFor="let item of pagePerItemArray" [value]="item">{{ item }}</option>
+        </select>
+    </div>
+</div>
